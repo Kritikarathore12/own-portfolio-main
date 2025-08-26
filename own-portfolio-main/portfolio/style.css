@@ -1,0 +1,330 @@
+
+:root {
+  --bg: #e3e8ef;
+  --fg: #1e2a38;
+  --card-bg: #e2e6f0;
+  --card-hover: #edf3fa;
+  --accent: #4a90e2;   /* soft blue */
+  --highlight: #6cb4ee;
+  --muted: #5c6b7a;
+  font-family: "Inter", Arial, sans-serif;
+}
+
+/* Global reset + transition */
+* {
+  transition: background 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  line-height: 1.6;
+  animation: fadeIn 1s ease;
+}
+
+.container {
+  width: 90%;
+  max-width: 1000px;
+  margin: auto;
+  padding: 25px 0;
+}
+/* =========================
+   Header & Nav (smaller)
+========================= */
+header {
+  background: var(--card-bg);
+  padding: 8px 0; /* smaller height */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  animation: slideDown 0.5s ease;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+.nav ul {
+  list-style: none;
+  display: flex;
+  gap: 15px; /* tighter */
+  font-size: 14px; /* smaller font */
+  margin: 0;
+  padding: 0;
+}
+
+.nav a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 500;
+  position: relative;
+}
+
+.nav a:hover { color: var(--accent); }
+
+
+
+/* =========================
+   Hero
+========================= */
+.hero {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 30px;
+  animation: fadeUp 1s ease;
+}
+
+.hero h1 {
+  font-size: 2.2rem;
+  margin-bottom: 10px;
+}
+
+.hero .accent { color: var(--accent); }
+
+.avatar img {
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--highlight);
+  box-shadow: 0 6px 15px rgba(0,0,0,0.1);
+  animation: popIn 1s ease;
+  
+}
+
+/* =========================
+   Buttons
+========================= */
+.btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.btn {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* =========================
+   Social Icons
+========================= */
+.social-hero, footer .social {
+  margin-top: 15px;
+  display: flex;
+  gap: 15px;
+  font-size: 20px;
+}
+
+.social-hero a, footer .social a {
+  color: var(--muted);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.social-hero a:hover, footer .social a:hover {
+  color: var(--accent);
+  transform: translateY(-3px);
+}
+
+/* =========================
+   Cards & Chips
+========================= */
+.cards {
+  display: grid;
+  gap: 20px;
+}
+
+.card {
+  background: var(--card-bg);
+  padding: 18px;
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  animation: fadeUp 1s ease;
+}
+
+.card:hover {
+  background: var(--card-hover);
+  transform: translateY(-4px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.card.highlight {
+  border-left: 4px solid var(--accent);
+  background: #f0f6ff;
+}
+.cards-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.cards-row .card {
+  flex: 1 1 calc(33% - 20px);
+  min-width: 250px;
+}
+.chip {
+  display: inline-block;
+  margin: 5px 4px;
+  padding: 5px 10px;
+  border-radius: 12px;
+  background: var(--highlight);
+  color: #fff;
+  font-size: 11px;
+}
+
+/* =========================
+   Timeline
+========================= */
+.timeline li {
+  margin: 8px 0;
+  position: relative;
+  padding-left: 18px;
+  font-size: 14px;
+}
+
+.timeline li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-size: 18px;
+}
+
+/* =========================
+   Footer
+========================= */
+footer {
+  margin-top: 30px;
+  border-top: 1px solid #ddd;
+  padding: 15px 0;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  animation: fadeIn 1s ease;
+}
+
+/* =========================
+   Mobile Menu
+========================= */
+#menuBtn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  #menuBtn { display: block; }
+  #navLinks {
+    display: none;
+    flex-direction: column;
+    background: var(--card-bg);
+    position: absolute;
+    right: 20px;
+    top: 55px;
+    padding: 8px;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+    animation: fadeIn 0.3s ease;
+  }
+  #navLinks.open { display: flex; }
+}
+
+/* =========================
+   Animations
+========================= */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes popIn {
+  0% { transform: scale(0.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+
+.contact-card {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+}
+
+.contact-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+.contact-container form {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-container input,
+.contact-container textarea {
+  padding: 12px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.contact-container button {
+  align-self: flex-start;
+}
+
+/* Center contact social icons */
+.contact-social {
+  flex: 1 1 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+}
+
+.contact-social a {
+  color: var(--muted);
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.contact-social a:hover {
+  color: var(--accent);
+  transform: translateY(-3px);
+}

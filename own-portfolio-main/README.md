@@ -1,0 +1,1 @@
+Welcome to my portfolio! I'm KRITIKA RATHORE, a FRONT-END Web developer passionate about learning new things. This readme serves as a guide to navigate through my projects and learn more about my skills and experiences.
