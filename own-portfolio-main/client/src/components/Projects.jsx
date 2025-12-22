@@ -19,32 +19,52 @@ const Projects = () => {
         fetchProjects();
     }, []);
 
+    const handleMouseMove = (e) => {
+        const { currentTarget: target } = e;
+        const rect = target.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        target.style.setProperty("--mouse-x", `${x}px`);
+        target.style.setProperty("--mouse-y", `${y}px`);
+    };
+
+    // Duplicate projects for seamless infinite scroll loop (4x to fill wide screens)
+    const displayProjects = [...projects, ...projects, ...projects, ...projects];
+
     return (
         <section id="projects" className="container">
             <h2><span className="emoji">💻</span> <span className="text-gradient">Projects</span></h2>
             {loading ? (
                 <p>Loading projects...</p>
             ) : (
-                <div className="cards">
-                    {projects.length === 0 ? (
-                        <p>No projects added yet.</p>
-                    ) : (
-                        projects.map((project) => (
-                            <article className="card" key={project._id} onClick={() => project.link && window.open(project.link, '_blank')} style={{ cursor: project.link ? 'pointer' : 'default' }}>
-                                <h3>{project.title}</h3>
-                                <p>{project.description}</p>
-                                {project.techStack && project.techStack.length > 0 && (
-                                    <div style={{ marginTop: '10px' }}>
-                                        {project.techStack.map((tech, index) => (
-                                            <span className="chip" key={index}>{tech}</span>
-                                        ))}
-                                    </div>
-                                )}
-                                {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px' }} />}
-                            </article>
-                        ))
-                    )}
-                </div>
+                projects.length === 0 ? (
+                    <p>No projects added yet.</p>
+                ) : (
+                    <div className="project-scroller">
+                        <div className="project-track">
+                            {displayProjects.map((project, index) => (
+                                <article
+                                    className="card spotlight-card"
+                                    key={`${project._id}-${index}`}
+                                    onClick={() => project.link && window.open(project.link, '_blank')}
+                                    style={{ cursor: project.link ? 'pointer' : 'default' }}
+                                    onMouseMove={handleMouseMove}
+                                >
+                                    <h3>{project.title}</h3>
+                                    <p>{project.description}</p>
+                                    {project.techStack && project.techStack.length > 0 && (
+                                        <div style={{ marginTop: '10px' }}>
+                                            {project.techStack.map((tech, idx) => (
+                                                <span className="chip" key={idx}>{tech}</span>
+                                            ))}
+                                        </div>
+                                    )}
+                                    {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px' }} />}
+                                </article>
+                            ))}
+                        </div>
+                    </div>
+                )
             )}
         </section>
     );

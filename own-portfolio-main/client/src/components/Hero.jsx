@@ -1,50 +1,58 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Hero = () => {
-    // Helper to wrap words for animation
-    const renderDroppingText = (text, delayStart = 0) => {
-        return text.split(' ').map((word, index) => (
-            <span
-                key={index}
-                className="drop-in"
-                style={{
-                    animationDelay: (delayStart + (index * 0.15)) + 's',
-                    display: 'inline-block',
-                    marginRight: '12px'
-                }}
-            >
-                {word}
-            </span>
-        ));
-    };
+    const [text, setText] = useState('');
+    const [isDeleting, setIsDeleting] = useState(false);
+    const [loopNum, setLoopNum] = useState(0);
+    const [typingSpeed, setTypingSpeed] = useState(150);
+
+    const roles = ["Software Developer", "Problem Solver", "Creator", "Tech Enthusiast"];
+
+    useEffect(() => {
+        const handleType = () => {
+            const i = loopNum % roles.length;
+            const fullText = roles[i];
+
+            setText(isDeleting
+                ? fullText.substring(0, text.length - 1)
+                : fullText.substring(0, text.length + 1)
+            );
+
+            setTypingSpeed(isDeleting ? 30 : 150);
+
+            if (!isDeleting && text === fullText) {
+                setTimeout(() => setIsDeleting(true), 2000); // Pause at end
+            } else if (isDeleting && text === '') {
+                setIsDeleting(false);
+                setLoopNum(loopNum + 1);
+            }
+        };
+
+        const timer = setTimeout(handleType, typingSpeed);
+        return () => clearTimeout(timer);
+    }, [text, isDeleting, loopNum, roles, typingSpeed]);
 
     return (
-        <section className="hero container">
+        <section id="about" className="container hero">
             <div className="hero-text">
                 <h1>
-                    {renderDroppingText("Hi, I’m", 0)}
-                    <br /> {/* Optional: user mash might be due to line wrapping perception? */}
-                    <span className="accent">
-                        {renderDroppingText("Kritika Rathore", 0.3)}
-                    </span>
-                    <span
-                        className="drop-in"
-                        style={{ animationDelay: '0.8s', display: 'inline-block' }}
-                    >
-                        👋
-                    </span>
+                    Hi, I'm <br />
+                    <span className="text-gradient">Kritika Rathore</span>
                 </h1>
+                <h2 style={{ fontSize: '2rem', minHeight: '60px' }}>
+                    Aspiring <span style={{ color: 'var(--accent)' }}>{text}</span><span className="cursor">|</span>
+                </h2>
                 <p>
-                    Aspiring <strong>Software Developer</strong> passionate about creating
-                    user-friendly applications, solving real-world problems, and
-                    continuously improving my skills through hackathons, projects, and teamwork.
+                    Passionate about building scalable web applications and solving complex problems with code.
+                    Exploring new technologies to create impactful digital experiences.
                 </p>
-                <div className="actions">
-                    <a className="btn" href="https://drive.google.com/file/d/1IkBhM63TZVRrwKbopS-lk4dVs0SAoFPZ/view?usp=sharing" target="_blank" rel="noopener noreferrer">Download CV</a>
+                <div style={{ display: 'flex', gap: '15px' }}>
+                    <a href="https://drive.google.com/file/d/1IkBhM63TZVRrwKbopS-lk4dVs0SAoFPZ/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="btn">Download CV</a>
                 </div>
             </div>
             <div className="avatar">
-                <img src="/assets/profile.jpg" alt="Kritika Rathore" />
+                {/* Using a reliable placeholder since the LinkedIn link might be expired. Replace 'src' with your local image path if available. */}
+                <img src="/assets/profile.jpg" alt="Profile" />
             </div>
         </section>
     );
