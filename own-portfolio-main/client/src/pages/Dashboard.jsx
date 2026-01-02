@@ -9,6 +9,8 @@ const Dashboard = () => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
+    const [editingId, setEditingId] = useState(null);
+
     const API_URL = 'http://localhost:5000/api';
 
     useEffect(() => {
@@ -18,6 +20,7 @@ const Dashboard = () => {
         }
         fetchData();
         setForm({});
+        setEditingId(null);
     }, [tab, token, navigate]);
 
     const fetchData = async () => {
@@ -36,20 +39,54 @@ const Dashboard = () => {
         try {
             let payload = { ...form };
             if (tab === 'projects' || tab === 'achievements') {
-                if (payload.techStack) payload.techStack = payload.techStack.split(',').map(item => item.trim());
-                if (payload.tags) payload.tags = payload.tags.split(',').map(item => item.trim());
+                if (payload.techStack && typeof payload.techStack === 'string') {
+                    payload.techStack = payload.techStack.split(',').map(item => item.trim());
+                } else if (Array.isArray(payload.techStack)) {
+                    // Already an array, no need to split
+                }
+
+                if (payload.tags && typeof payload.tags === 'string') {
+                    payload.tags = payload.tags.split(',').map(item => item.trim());
+                } else if (Array.isArray(payload.tags)) {
+                    // Already an array
+                }
             }
 
-            await axios.post(`${API_URL}/${tab}`, payload, { headers: { 'x-auth-token': token } });
+            if (editingId) {
+                await axios.put(`${API_URL}/${tab}/${editingId}`, payload, { headers: { 'x-auth-token': token } });
+                alert(`${tab} updated!`);
+            } else {
+                await axios.post(`${API_URL}/${tab}`, payload, { headers: { 'x-auth-token': token } });
+                alert(`${tab} added!`);
+            }
+
             setForm({});
+            setEditingId(null);
             fetchData();
-            alert(`${tab} added!`);
         } catch (err) {
-            alert('Error adding item');
+            alert('Error adding/updating item');
             console.error(err);
         }
     };
 
+    const handleEdit = (item) => {
+        setEditingId(item._id);
+        // Deep copy and format arrays back to comma-separated strings for inputs
+        let editForm = { ...item };
+        if (editForm.techStack && Array.isArray(editForm.techStack)) {
+            editForm.techStack = editForm.techStack.join(', ');
+        }
+        if (editForm.tags && Array.isArray(editForm.tags)) {
+            editForm.tags = editForm.tags.join(', ');
+        }
+        setForm(editForm);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    };
+
+    const handleCancelEdit = () => {
+        setEditingId(null);
+        setForm({});
+    };
 
     const handleFileChange = async (e) => {
         const file = e.target.files[0];
@@ -107,7 +144,15 @@ const Dashboard = () => {
             </div>
 
             <div className="contact-card" style={{ marginBottom: '40px' }}>
-                <h3>Add New {tab}</h3>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                    <h3>{editingId ? `Edit ${tab.slice(0, -1)}` : `Add New ${tab.slice(0, -1)}`}</h3>
+                    {editingId && (
+                        <button onClick={handleCancelEdit} style={{ background: '#95a5a6', border: 'none', color: 'white', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}>
+                            Cancel Edit
+                        </button>
+                    )}
+                </div>
+
                 <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
 
                     {/* Common / Specific Fields */}
@@ -153,7 +198,7 @@ const Dashboard = () => {
                         </>
                     )}
 
-                    <button type="submit" className="btn">Add</button>
+                    <button type="submit" className="btn">{editingId ? 'Update' : 'Add'}</button>
                 </form>
             </div>
 
@@ -162,12 +207,20 @@ const Dashboard = () => {
                     <article className="card" key={item._id} style={{ position: 'relative' }}>
                         <h4>{item.title || item.role}</h4>
                         <p>{item.description || item.issuer || item.company}</p>
-                        <button
-                            onClick={() => handleDelete(item._id)}
-                            style={{ position: 'absolute', top: '10px', right: '10px', background: '#e74c3c', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
-                        >
-                            Delete
-                        </button>
+                        <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '5px' }}>
+                            <button
+                                onClick={() => handleEdit(item)}
+                                style={{ background: '#3498db', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                            >
+                                Edit
+                            </button>
+                            <button
+                                onClick={() => handleDelete(item._id)}
+                                style={{ background: '#e74c3c', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                            >
+                                Delete
+                            </button>
+                        </div>
                     </article>
                 ))}
             </div>

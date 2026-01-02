@@ -4,7 +4,8 @@ const ExperienceSchema = new mongoose.Schema({
     role: { type: String, required: true }, // e.g. Team Leader
     company: { type: String }, // e.g. QuizWizz (Project or Company)
     date: { type: String }, // e.g. Feb 2025
-    description: { type: String } // e.g. "Organized events..."
+    description: { type: String }, // e.g. "Organized events..."
+    order: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('Experience', ExperienceSchema);

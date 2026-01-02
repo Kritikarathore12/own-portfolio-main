@@ -5,8 +5,25 @@ const Achievement = require('../models/Achievement');
 
 router.get('/', async (req, res) => {
     try {
-        const achievements = await Achievement.find();
+        const achievements = await Achievement.find().sort({ order: 1 });
         res.json(achievements);
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
+});
+
+// PUT api/achievements/reorder (Private)
+router.put('/reorder', auth, async (req, res) => {
+    const { order } = req.body;
+    try {
+        const operations = order.map((id, index) => ({
+            updateOne: {
+                filter: { _id: id },
+                update: { order: index }
+            }
+        }));
+        await Achievement.bulkWrite(operations);
+        res.json({ msg: 'Reordered' });
     } catch (err) {
         res.status(500).send('Server Error');
     }
@@ -17,6 +34,24 @@ router.post('/', auth, async (req, res) => {
     try {
         const newAchievement = new Achievement({ title, description, tags, image, link });
         const achievement = await newAchievement.save();
+        res.json(achievement);
+    } catch (err) {
+        res.status(500).send('Server Error');
+    }
+});
+
+// PUT api/achievements/:id (Private)
+router.put('/:id', auth, async (req, res) => {
+    const { title, description, tags, image, link } = req.body;
+    try {
+        let achievement = await Achievement.findById(req.params.id);
+        if (!achievement) return res.status(404).json({ msg: 'Achievement not found' });
+
+        achievement = await Achievement.findByIdAndUpdate(
+            req.params.id,
+            { $set: { title, description, tags, image, link } },
+            { new: true }
+        );
         res.json(achievement);
     } catch (err) {
         res.status(500).send('Server Error');

@@ -52,14 +52,14 @@ const Projects = () => {
                                 >
                                     <h3>{project.title}</h3>
                                     <p>{project.description}</p>
+                                    {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px', marginBottom: '15px' }} />}
                                     {project.techStack && project.techStack.length > 0 && (
-                                        <div style={{ marginTop: '10px' }}>
+                                        <div style={{ marginTop: '0', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                                             {project.techStack.map((tech, idx) => (
-                                                <span className="chip" key={idx}>{tech}</span>
+                                                <span className="chip" key={idx} style={{ margin: 0, textAlign: 'center', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>{tech}</span>
                                             ))}
                                         </div>
                                     )}
-                                    {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px' }} />}
                                 </article>
                             ))}
                         </div>

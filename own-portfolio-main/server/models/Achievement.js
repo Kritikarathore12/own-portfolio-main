@@ -5,7 +5,8 @@ const AchievementSchema = new mongoose.Schema({
     description: { type: String },
     tags: [{ type: String }],
     image: { type: String },
-    link: { type: String }
+    link: { type: String },
+    order: { type: Number, default: 0 }
 });
 
 module.exports = mongoose.model('Achievement', AchievementSchema);

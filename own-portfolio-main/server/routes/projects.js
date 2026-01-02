@@ -6,8 +6,26 @@ const Project = require('../models/Project');
 // GET api/projects
 router.get('/', async (req, res) => {
     try {
-        const projects = await Project.find().sort({ createdAt: -1 });
+        const projects = await Project.find().sort({ order: 1, createdAt: -1 });
         res.json(projects);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// PUT api/projects/reorder (Private)
+router.put('/reorder', auth, async (req, res) => {
+    const { order } = req.body;
+    try {
+        const operations = order.map((id, index) => ({
+            updateOne: {
+                filter: { _id: id },
+                update: { order: index }
+            }
+        }));
+        await Project.bulkWrite(operations);
+        res.json({ msg: 'Reordered' });
     } catch (err) {
         console.error(err.message);
         res.status(500).send('Server Error');
@@ -26,6 +44,25 @@ router.post('/', auth, async (req, res) => {
             link
         });
         const project = await newProject.save();
+        res.json(project);
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).send('Server Error');
+    }
+});
+
+// PUT api/projects/:id (Private)
+router.put('/:id', auth, async (req, res) => {
+    const { title, description, techStack, image, link } = req.body;
+    try {
+        let project = await Project.findById(req.params.id);
+        if (!project) return res.status(404).json({ msg: 'Project not found' });
+
+        project = await Project.findByIdAndUpdate(
+            req.params.id,
+            { $set: { title, description, techStack, image, link } },
+            { new: true }
+        );
         res.json(project);
     } catch (err) {
         console.error(err.message);
