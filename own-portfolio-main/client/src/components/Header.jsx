@@ -16,7 +16,7 @@ const Header = () => {
                         <li><a href="/#about" onClick={() => setIsOpen(false)}>About</a></li>
                         <li><a href="/#skills" onClick={() => setIsOpen(false)}>Skills</a></li>
                         <li><a href="/#projects" onClick={() => setIsOpen(false)}>Projects</a></li>
-                        <li><a href="/#achievements" onClick={() => setIsOpen(false)}>Awards</a></li>
+
                         <li><a href="/#certifications" onClick={() => setIsOpen(false)}>Certifications</a></li>
                         <li><a href="/#experience" onClick={() => setIsOpen(false)}>Experience</a></li>
                         <li><a href="/#contact" onClick={() => setIsOpen(false)}>Contact</a></li>

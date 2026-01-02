@@ -2,18 +2,17 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Achievements = () => {
-    // Hardcoded data as per user request
-    const [achievements] = useState([]);
+    const [achievements, setAchievements] = useState([]);
 
-    // useEffect(() => {
-    //     axios.get('http://localhost:5000/api/achievements')
-    //         .then(res => setAchievements(res.data))
-    //         .catch(err => console.error(err));
-    // }, []);
+    useEffect(() => {
+        axios.get('http://localhost:5000/api/achievements')
+            .then(res => setAchievements(res.data))
+            .catch(err => console.error(err));
+    }, []);
 
     return (
         <section id="achievements" className="container">
-            <h2><span className="emoji">🏆</span> <span className="text-gradient">Achievements & Hackathons</span></h2>
+            <h2><span className="emoji">🏆</span> <span className="text-gradient">Achievements</span></h2>
             {achievements.length === 0 ? <p>No achievements added yet.</p> : (
                 <div className="cards cards-row">
                     {achievements.map(ach => (

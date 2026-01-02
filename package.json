@@ -1,0 +1,8 @@
+{
+    "name": "own-portfolio-root",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "npm run dev --prefix own-portfolio-main",
+        "install:all": "npm install --prefix own-portfolio-main"
+    }
+}
