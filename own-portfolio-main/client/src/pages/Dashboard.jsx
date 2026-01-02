@@ -50,6 +50,27 @@ const Dashboard = () => {
         }
     };
 
+
+    const handleFileChange = async (e) => {
+        const file = e.target.files[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        try {
+            const res = await axios.post(`${API_URL}/upload`, formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            setForm({ ...form, image: res.data.filePath });
+        } catch (err) {
+            console.error(err);
+            alert('File upload failed');
+        }
+    };
+
     const handleDelete = async (id) => {
         if (!window.confirm('Are you sure?')) return;
         try {
@@ -95,6 +116,7 @@ const Dashboard = () => {
                             <input name="title" placeholder="Title" value={form.title || ''} onChange={handleChange} required style={{ padding: '10px' }} />
                             <textarea name="description" placeholder="Description" value={form.description || ''} onChange={handleChange} required style={{ padding: '10px' }} />
                             <input name="techStack" placeholder="Tech Stack (comma separated)" value={form.techStack || ''} onChange={handleChange} style={{ padding: '10px' }} />
+                            <input type="file" onChange={handleFileChange} style={{ padding: '10px' }} />
                             <input name="image" placeholder="Image URL" value={form.image || ''} onChange={handleChange} style={{ padding: '10px' }} />
                             <input name="link" placeholder="Project Link" value={form.link || ''} onChange={handleChange} style={{ padding: '10px' }} />
                         </>
@@ -105,6 +127,7 @@ const Dashboard = () => {
                             <input name="title" placeholder="Title" value={form.title || ''} onChange={handleChange} required style={{ padding: '10px' }} />
                             <textarea name="description" placeholder="Description" value={form.description || ''} onChange={handleChange} style={{ padding: '10px' }} />
                             <input name="tags" placeholder="Tags (comma separated)" value={form.tags || ''} onChange={handleChange} style={{ padding: '10px' }} />
+                            <input type="file" onChange={handleFileChange} style={{ padding: '10px' }} />
                             <input name="image" placeholder="Image URL" value={form.image || ''} onChange={handleChange} style={{ padding: '10px' }} />
                             <input name="link" placeholder="Link" value={form.link || ''} onChange={handleChange} style={{ padding: '10px' }} />
                         </>
@@ -115,6 +138,7 @@ const Dashboard = () => {
                             <input name="title" placeholder="Title" value={form.title || ''} onChange={handleChange} required style={{ padding: '10px' }} />
                             <input name="issuer" placeholder="Issuer" value={form.issuer || ''} onChange={handleChange} style={{ padding: '10px' }} />
                             <input name="date" placeholder="Date" value={form.date || ''} onChange={handleChange} style={{ padding: '10px' }} />
+                            <input type="file" onChange={handleFileChange} style={{ padding: '10px' }} />
                             <input name="image" placeholder="Image URL" value={form.image || ''} onChange={handleChange} style={{ padding: '10px' }} />
                             <input name="link" placeholder="Link" value={form.link || ''} onChange={handleChange} style={{ padding: '10px' }} />
                         </>

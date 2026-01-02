@@ -2,13 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Achievements = () => {
-    const [achievements, setAchievements] = useState([]);
+    // Hardcoded data as per user request
+    const [achievements] = useState([]);
 
-    useEffect(() => {
-        axios.get('http://localhost:5000/api/achievements')
-            .then(res => setAchievements(res.data))
-            .catch(err => console.error(err));
-    }, []);
+    // useEffect(() => {
+    //     axios.get('http://localhost:5000/api/achievements')
+    //         .then(res => setAchievements(res.data))
+    //         .catch(err => console.error(err));
+    // }, []);
 
     return (
         <section id="achievements" className="container">

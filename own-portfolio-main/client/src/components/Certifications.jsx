@@ -3,6 +3,7 @@ import axios from 'axios';
 
 const Certifications = () => {
     const [certs, setCerts] = useState([]);
+    const [selectedCert, setSelectedCert] = useState(null);
 
     useEffect(() => {
         axios.get('http://localhost:5000/api/certifications')
@@ -10,26 +11,163 @@ const Certifications = () => {
             .catch(err => console.error(err));
     }, []);
 
+    const openModal = (cert) => {
+        document.body.style.overflow = 'hidden'; // Prevent scrolling
+        setSelectedCert(cert);
+    };
+
+    const closeModal = () => {
+        document.body.style.overflow = 'unset';
+        setSelectedCert(null);
+    };
+
     return (
-        <section id="certifications" className="container">
+        <section id="certifications" className="container" style={{ paddingBottom: '5rem' }}>
             <h2><span className="emoji">📜</span> <span className="text-gradient">Certifications</span></h2>
+
             {certs.length === 0 ? <p>No certifications added yet.</p> : (
-                <ul className="timeline">
+                <div style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                    gap: '2rem',
+                    marginTop: '2rem'
+                }}>
                     {certs.map(cert => (
-                        <li key={cert._id} style={{ marginBottom: '20px' }}>
-                            {cert.link ? (
-                                <a href={cert.link} target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                                    <strong>{cert.issuer}</strong> — <span style={{ fontWeight: 600 }}>{cert.title}</span> ({cert.date})
-                                    {cert.image && <div style={{ marginTop: '10px' }}><img src={cert.image} alt="cert" style={{ maxHeight: '150px', borderRadius: '8px', boxShadow: '0 4px 10px rgba(0,0,0,0.1)' }} /></div>}
-                                </a>
-                            ) : (
-                                <span>
-                                    <strong>{cert.issuer}</strong> — {cert.title} ({cert.date})
-                                </span>
-                            )}
-                        </li>
+                        <div
+                            key={cert._id}
+                            className="cert-card"
+                            onClick={() => openModal(cert)}
+                            style={{
+                                background: 'rgba(255, 255, 255, 0.05)',
+                                borderRadius: '15px',
+                                padding: '15px',
+                                cursor: 'pointer',
+                                transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                                border: '1px solid rgba(255, 255, 255, 0.1)',
+                                position: 'relative',
+                                overflow: 'hidden'
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.transform = 'translateY(-5px)';
+                                e.currentTarget.style.boxShadow = '0 10px 20px rgba(0,0,0,0.2)';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.transform = 'translateY(0)';
+                                e.currentTarget.style.boxShadow = 'none';
+                            }}
+                        >
+                            <div style={{
+                                width: '100%',
+                                height: '200px',
+                                overflow: 'hidden',
+                                borderRadius: '10px',
+                                marginBottom: '1rem',
+                                backgroundColor: '#000'
+                            }}>
+                                {cert.image ? (
+                                    <img
+                                        src={cert.image}
+                                        alt={cert.title}
+                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    />
+                                ) : (
+                                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#666' }}>
+                                        No Image
+                                    </div>
+                                )}
+                            </div>
+
+                            <h3 style={{ fontSize: '1.2rem', marginBottom: '0.5rem', color: '#fff' }}>{cert.title}</h3>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.9rem', color: '#aaa' }}>
+                                <span>{cert.issuer}</span>
+                                <span>{cert.date}</span>
+                            </div>
+                        </div>
                     ))}
-                </ul>
+                </div>
+            )}
+
+            {/* Modal */}
+            {selectedCert && (
+                <div
+                    onClick={closeModal}
+                    style={{
+                        position: 'fixed',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                        zIndex: 1000,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '20px',
+                        backdropFilter: 'blur(5px)'
+                    }}
+                >
+                    <div
+                        onClick={e => e.stopPropagation()}
+                        style={{
+                            position: 'relative',
+                            maxWidth: '90%',
+                            maxHeight: '90%',
+                            animation: 'fadeIn 0.3s ease'
+                        }}
+                    >
+                        <button
+                            onClick={closeModal}
+                            style={{
+                                position: 'absolute',
+                                top: '-40px',
+                                right: '-40px',
+                                background: 'transparent',
+                                border: 'none',
+                                color: 'white',
+                                fontSize: '2rem',
+                                cursor: 'pointer'
+                            }}
+                        >
+                            &times;
+                        </button>
+
+                        {selectedCert.image && (
+                            <img
+                                src={selectedCert.image}
+                                alt={selectedCert.title}
+                                style={{
+                                    maxWidth: '100%',
+                                    maxHeight: '85vh',
+                                    boxShadow: '0 0 30px rgba(0,0,0,0.5)',
+                                    borderRadius: '4px'
+                                }}
+                            />
+                        )}
+
+                        <div style={{ marginTop: '1rem', textAlign: 'center', color: 'white' }}>
+                            <h3>{selectedCert.title}</h3>
+                            <p>{selectedCert.issuer} | {selectedCert.date}</p>
+                            {selectedCert.link && (
+                                <a
+                                    href={selectedCert.link}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    style={{
+                                        display: 'inline-block',
+                                        marginTop: '10px',
+                                        color: '#3498db',
+                                        textDecoration: 'none',
+                                        border: '1px solid #3498db',
+                                        padding: '5px 15px',
+                                        borderRadius: '20px'
+                                    }}
+                                >
+                                    Verify Credential
+                                </a>
+                            )}
+                        </div>
+                    </div>
+                </div>
             )}
         </section>
     );

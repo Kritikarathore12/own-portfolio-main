@@ -2,19 +2,42 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const Hackathons = () => {
-    const [hackathons, setHackathons] = useState([]);
+    // Hardcoded data as per user request to be independent of server for now
+    const [hackathons] = useState([
+        {
+            "_id": "6948f3d02669f21ed7e50ed0",
+            "title": "KRIYETA 4.0",
+            "description": "Secured 1st position in the KRIYETA 4.0 hackathon demonstrating innovative problem solving.",
+            "badge": "Winner 🥇",
+            "isStat": false
+        },
+        {
+            "_id": "6948f3d02669f21ed7e50ed1",
+            "title": "Hackathon Journey",
+            "description": "Actively participated in more than 5 hackathons, consistently learning and building.",
+            "isStat": true,
+            "statValue": "5+"
+        },
+        {
+            "_id": "6948f3d02669f21ed7e50ed2",
+            "title": "PRAYATNA 2.0",
+            "description": "Achieved top rank in the prestigious PRAYATNA 2.0 hackathon event.",
+            "badge": "Winner 🏆",
+            "isStat": false
+        }
+    ]);
 
-    useEffect(() => {
-        const fetchHackathons = async () => {
-            try {
-                const res = await axios.get('http://localhost:5000/api/hackathons');
-                setHackathons(res.data);
-            } catch (err) {
-                console.error('Error fetching hackathons:', err);
-            }
-        };
-        fetchHackathons();
-    }, []);
+    // useEffect(() => {
+    //     const fetchHackathons = async () => {
+    //         try {
+    //             const res = await axios.get('http://localhost:5000/api/hackathons');
+    //             setHackathons(res.data);
+    //         } catch (err) {
+    //             console.error('Error fetching hackathons:', err);
+    //         }
+    //     };
+    //     fetchHackathons();
+    // }, []);
 
     const handleMouseMove = (e) => {
         const { currentTarget: target } = e;
