@@ -1,6 +1,87 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import {
+    DndContext,
+    closestCenter,
+    KeyboardSensor,
+    PointerSensor,
+    useSensor,
+    useSensors,
+    DragOverlay
+} from '@dnd-kit/core';
+import {
+    arrayMove,
+    SortableContext,
+    sortableKeyboardCoordinates,
+    useSortable,
+    rectSortingStrategy,
+} from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+
+// Sortable Item Component
+const SortableItem = ({ id, item, handleEdit, handleDelete }) => {
+    const {
+        attributes,
+        listeners,
+        setNodeRef,
+        transform,
+        transition,
+        isDragging
+    } = useSortable({ id });
+
+    const style = {
+        transform: CSS.Transform.toString(transform),
+        transition,
+        opacity: isDragging ? 0.5 : 1,
+        position: 'relative',
+        touchAction: 'none' // Essential for pointer events on mobile/touch
+    };
+
+    return (
+        <article
+            ref={setNodeRef}
+            style={style}
+            className="card"
+        >
+            <div
+                {...attributes}
+                {...listeners}
+                style={{
+                    position: 'absolute',
+                    top: '10px',
+                    left: '10px',
+                    cursor: 'grab',
+                    fontSize: '1.5rem',
+                    color: '#aaa',
+                    zIndex: 10
+                }}
+            >
+                ☰
+            </div>
+
+            <div style={{ paddingLeft: '30px' }}>
+                <h4>{item.title || item.role}</h4>
+                <p>{item.description || item.issuer || item.company}</p>
+            </div>
+
+            <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '5px' }}>
+                <button
+                    onClick={(e) => { e.stopPropagation(); handleEdit(item); }}
+                    style={{ background: '#3498db', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                >
+                    Edit
+                </button>
+                <button
+                    onClick={(e) => { e.stopPropagation(); handleDelete(item._id); }}
+                    style={{ background: '#e74c3c', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
+                >
+                    Delete
+                </button>
+            </div>
+        </article>
+    );
+};
 
 const Dashboard = () => {
     const [tab, setTab] = useState('projects'); // projects, certifications, achievements, experience
@@ -10,8 +91,20 @@ const Dashboard = () => {
     const token = localStorage.getItem('token');
 
     const [editingId, setEditingId] = useState(null);
+    const [activeId, setActiveId] = useState(null); // For DragOverlay if needed
 
     const API_URL = 'http://localhost:5000/api';
+
+    const sensors = useSensors(
+        useSensor(PointerSensor, {
+            activationConstraint: {
+                distance: 5, // Prevent accidental drags when clicking buttons
+            },
+        }),
+        useSensor(KeyboardSensor, {
+            coordinateGetter: sortableKeyboardCoordinates,
+        })
+    );
 
     useEffect(() => {
         if (!token) {
@@ -30,6 +123,32 @@ const Dashboard = () => {
         } catch (err) {
             console.error(err);
         }
+    };
+
+    const handleDragEnd = async (event) => {
+        const { active, over } = event;
+        setActiveId(null);
+
+        if (active.id !== over.id) {
+            const oldIndex = data.findIndex((item) => item._id === active.id);
+            const newIndex = data.findIndex((item) => item._id === over.id);
+
+            const newData = arrayMove(data, oldIndex, newIndex);
+            setData(newData); // Optimistic update
+
+            // Send reorder request to backend
+            try {
+                const orderIds = newData.map(item => item._id);
+                await axios.put(`${API_URL}/${tab}/reorder`, { order: orderIds }, { headers: { 'x-auth-token': token } });
+            } catch (err) {
+                console.error('Reorder failed', err);
+                fetchData(); // Revert on failure
+            }
+        }
+    };
+
+    const handleDragStart = (event) => {
+        setActiveId(event.active.id);
     };
 
     const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
@@ -101,7 +220,13 @@ const Dashboard = () => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            setForm({ ...form, image: res.data.filePath });
+
+            if (tab === 'achievements') {
+                const currentImages = form.images || [];
+                setForm({ ...form, images: [...currentImages, res.data.filePath] });
+            } else {
+                setForm({ ...form, image: res.data.filePath });
+            }
         } catch (err) {
             console.error(err);
             alert('File upload failed');
@@ -172,8 +297,29 @@ const Dashboard = () => {
                             <input name="title" placeholder="Title" value={form.title || ''} onChange={handleChange} required style={{ padding: '10px' }} />
                             <textarea name="description" placeholder="Description" value={form.description || ''} onChange={handleChange} style={{ padding: '10px' }} />
                             <input name="tags" placeholder="Tags (comma separated)" value={form.tags || ''} onChange={handleChange} style={{ padding: '10px' }} />
-                            <input type="file" onChange={handleFileChange} style={{ padding: '10px' }} />
-                            <input name="image" placeholder="Image URL" value={form.image || ''} onChange={handleChange} style={{ padding: '10px' }} />
+
+                            <div style={{ border: '1px solid #ccc', padding: '10px', borderRadius: '5px' }}>
+                                <label style={{ display: 'block', marginBottom: '5px' }}>Images (Upload Multiple)</label>
+                                <input type="file" onChange={handleFileChange} style={{ marginBottom: '10px' }} />
+                                <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
+                                    {form.images && form.images.map((img, i) => (
+                                        <div key={i} style={{ position: 'relative' }}>
+                                            <img src={img} alt="uploaded" style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }} />
+                                            <button
+                                                type="button"
+                                                onClick={() => {
+                                                    const newImages = form.images.filter((_, idx) => idx !== i);
+                                                    setForm({ ...form, images: newImages });
+                                                }}
+                                                style={{ position: 'absolute', top: -5, right: -5, background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+                                            >
+                                                x
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+
                             <input name="link" placeholder="Link" value={form.link || ''} onChange={handleChange} style={{ padding: '10px' }} />
                         </>
                     )}
@@ -202,27 +348,30 @@ const Dashboard = () => {
                 </form>
             </div>
 
-            <div className="cards">
-                {data.map((item) => (
-                    <article className="card" key={item._id} style={{ position: 'relative' }}>
-                        <h4>{item.title || item.role}</h4>
-                        <p>{item.description || item.issuer || item.company}</p>
-                        <div style={{ position: 'absolute', top: '10px', right: '10px', display: 'flex', gap: '5px' }}>
-                            <button
-                                onClick={() => handleEdit(item)}
-                                style={{ background: '#3498db', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
-                            >
-                                Edit
-                            </button>
-                            <button
-                                onClick={() => handleDelete(item._id)}
-                                style={{ background: '#e74c3c', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
-                            >
-                                Delete
-                            </button>
+            <div className="cards-wrapper">
+                <DndContext
+                    sensors={sensors}
+                    collisionDetection={closestCenter}
+                    onDragEnd={handleDragEnd}
+                    onDragStart={handleDragStart}
+                >
+                    <SortableContext
+                        items={data.map(item => item._id)}
+                        strategy={rectSortingStrategy}
+                    >
+                        <div className="cards">
+                            {data.map((item) => (
+                                <SortableItem
+                                    key={item._id}
+                                    id={item._id}
+                                    item={item}
+                                    handleEdit={handleEdit}
+                                    handleDelete={handleDelete}
+                                />
+                            ))}
                         </div>
-                    </article>
-                ))}
+                    </SortableContext>
+                </DndContext>
             </div>
         </div>
     );

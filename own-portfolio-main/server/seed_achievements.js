@@ -1,21 +1,28 @@
 const mongoose = require('mongoose');
 const Achievement = require('./models/Achievement');
-// const dotenv = require('dotenv');
-// dotenv.config();
+const dotenv = require('dotenv');
+dotenv.config();
 
 const dummyAchievements = [
     {
-        title: 'Best Developer 2024',
-        description: 'Recognized for outstanding contributions to open source projects.',
-        tags: ['Award', 'Development'],
-        image: '',
+        title: 'KRIYETA 4.0',
+        description: 'Secured 1st position in the KRIYETA 4.0 hackathon demonstrating innovative problem solving.',
+        tags: ['Winner 🥇', 'Hackathon'],
+        images: [],
         link: ''
     },
     {
-        title: 'Open Source Contributor',
-        description: 'Active contributor to various React ecosystem libraries.',
-        tags: ['Community', 'Open Source'],
-        image: '',
+        title: 'Hackathon Journey',
+        description: 'Actively participated in more than 5 hackathons, consistently learning and building.',
+        tags: ['5+ Hackathons', 'Experience'],
+        images: [],
+        link: ''
+    },
+    {
+        title: 'PRAYATNA 2.0',
+        description: 'Achieved top rank in the prestigious PRAYATNA 2.0 hackathon event.',
+        tags: ['Winner 🏆', 'Hackathon'],
+        images: [],
         link: ''
     }
 ];

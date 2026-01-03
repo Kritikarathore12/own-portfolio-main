@@ -30,9 +30,9 @@ router.put('/reorder', auth, async (req, res) => {
 });
 
 router.post('/', auth, async (req, res) => {
-    const { title, description, tags, image, link } = req.body;
+    const { title, description, tags, images, link } = req.body;
     try {
-        const newAchievement = new Achievement({ title, description, tags, image, link });
+        const newAchievement = new Achievement({ title, description, tags, images, link });
         const achievement = await newAchievement.save();
         res.json(achievement);
     } catch (err) {
@@ -42,14 +42,14 @@ router.post('/', auth, async (req, res) => {
 
 // PUT api/achievements/:id (Private)
 router.put('/:id', auth, async (req, res) => {
-    const { title, description, tags, image, link } = req.body;
+    const { title, description, tags, images, link } = req.body;
     try {
         let achievement = await Achievement.findById(req.params.id);
         if (!achievement) return res.status(404).json({ msg: 'Achievement not found' });
 
         achievement = await Achievement.findByIdAndUpdate(
             req.params.id,
-            { $set: { title, description, tags, image, link } },
+            { $set: { title, description, tags, images, link } },
             { new: true }
         );
         res.json(achievement);

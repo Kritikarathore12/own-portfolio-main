@@ -4,7 +4,7 @@ const AchievementSchema = new mongoose.Schema({
     title: { type: String, required: true },
     description: { type: String },
     tags: [{ type: String }],
-    image: { type: String },
+    images: [{ type: String }], // Changed from image: String
     link: { type: String },
     order: { type: Number, default: 0 }
 });

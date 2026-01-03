@@ -5,9 +5,12 @@ import Home from './pages/Home';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
 
+import StarBackground from './components/StarBackground';
+
 function App() {
   return (
     <Router>
+      <StarBackground />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />

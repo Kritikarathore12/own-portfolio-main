@@ -1,4 +1,5 @@
 import React from 'react';
+import googleColabIcon from '../assets/google_colab.png';
 
 const Skills = () => {
     const categories = [
@@ -36,7 +37,7 @@ const Skills = () => {
             items: [
                 { name: "Git", id: "git" },
                 { name: "GitHub", id: "github" },
-                { name: "VS Code", id: "vscode" },
+                { name: "Google Colab", id: "colab", customIcon: googleColabIcon },
                 { name: "Postman", id: "postman" }
             ]
         }
@@ -75,7 +76,7 @@ const Skills = () => {
                                     transition: 'transform 0.3s'
                                 }}>
                                     <img
-                                        src={"https://skillicons.dev/icons?i=" + skill.id + "&theme=light"}
+                                        src={skill.customIcon ? skill.customIcon : "https://skillicons.dev/icons?i=" + skill.id + "&theme=light"}
                                         alt={skill.name}
                                         style={{ width: '50px', height: '50px' }}
                                     />
