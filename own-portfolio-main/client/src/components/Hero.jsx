@@ -36,7 +36,7 @@ const Hero = () => {
         <section id="about" className="container hero">
             <div className="hero-text">
                 <h1>
-                    Hi, I'm <br />
+                    <span className="hero-greeting">Hi, I'm</span> <br />
                     <span className="text-gradient">Kritika Rathore</span>
                 </h1>
                 <h2 style={{ fontSize: '2rem', minHeight: '60px' }}>

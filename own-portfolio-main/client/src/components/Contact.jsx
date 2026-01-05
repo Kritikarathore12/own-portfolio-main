@@ -11,12 +11,22 @@ const Contact = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (!formData.name || !formData.email || !formData.message) {
+            setStatus('Please fill in all required fields (Name, Email, Message).');
+            return;
+        }
+
         setStatus('Sending...');
-        // Mock submission or real backend if implemented
-        setTimeout(() => {
-            setStatus('Message Sent! (Backend Pending)');
+
+        try {
+            await axios.post('http://localhost:5000/api/contact', formData);
+            setStatus('Message Sent! 🚀');
             setFormData({ name: '', email: '', message: '' });
-        }, 1000);
+        } catch (error) {
+            console.error(error);
+            setStatus('Failed to send. Please try again.');
+        }
     };
 
     return (
@@ -62,10 +72,7 @@ const Contact = () => {
                             <i className="fab fa-github"></i>
                             <span>GitHub</span>
                         </a>
-                        <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="social-link x">
-                            <i className="fa-brands fa-x-twitter"></i>
-                            <span>X</span>
-                        </a>
+
                         <a href="mailto:kritikarathore1211@gmail.com" className="social-link email">
                             <i className="fas fa-envelope"></i>
                             <span>Email</span>

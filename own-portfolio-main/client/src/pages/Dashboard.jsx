@@ -84,7 +84,7 @@ const SortableItem = ({ id, item, handleEdit, handleDelete }) => {
 };
 
 const Dashboard = () => {
-    const [tab, setTab] = useState('projects'); // projects, certifications, achievements, experience
+    const [tab, setTab] = useState('projects'); // projects, certifications, achievements, experience, contact
     const [data, setData] = useState([]);
     const [form, setForm] = useState({});
     const navigate = useNavigate();
@@ -256,7 +256,7 @@ const Dashboard = () => {
             </div>
 
             <div style={{ display: 'flex', gap: '10px', marginBottom: '20px', flexWrap: 'wrap' }}>
-                {['projects', 'achievements', 'certifications', 'experience'].map(t => (
+                {['projects', 'achievements', 'certifications', 'experience', 'contact'].map(t => (
                     <button
                         key={t}
                         onClick={() => setTab(t)}
@@ -373,6 +373,27 @@ const Dashboard = () => {
                     </SortableContext>
                 </DndContext>
             </div>
+
+            {tab === 'contact' && (
+                <div className="messages-grid" style={{ display: 'grid', gap: '20px', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))' }}>
+                    {data.map(msg => (
+                        <div key={msg._id} style={{ background: '#1e293b', padding: '20px', borderRadius: '15px', border: '1px solid #334155' }}>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '10px' }}>
+                                <h4 style={{ margin: 0 }}>{msg.name}</h4>
+                                <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>{new Date(msg.date).toLocaleDateString()}</span>
+                            </div>
+                            <div style={{ color: '#cbd5e1', fontSize: '0.9rem', marginBottom: '10px' }}>{msg.email}</div>
+                            <p style={{ color: '#e2e8f0', background: '#0f172a', padding: '10px', borderRadius: '8px' }}>{msg.message}</p>
+                            <button
+                                onClick={() => handleDelete(msg._id)}
+                                style={{ marginTop: '10px', background: '#ef4444', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer', fontSize: '0.8rem' }}
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     );
 };

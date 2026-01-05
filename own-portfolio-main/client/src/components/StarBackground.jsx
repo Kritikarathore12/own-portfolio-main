@@ -56,7 +56,7 @@ const FloatingIcons = () => {
 
     // Duplicate icons to have more spread across the screen
     const icons = [];
-    for (let i = 0; i < 60; i++) {
+    for (let i = 0; i < 120; i++) {
         icons.push({
             Component: baseIcons[i % baseIcons.length],
             id: i + 1
@@ -121,7 +121,8 @@ const StarBackground = () => {
             height: '100vh',
             zIndex: -1,
             pointerEvents: 'none',
-            background: 'linear-gradient(to bottom, #17153B, #2E236C)'
+            background: 'linear-gradient(to bottom, #0f0c29, #302b63, #24243e)'
+
         }}>
             <Canvas camera={{ position: [0, 0, 10], fov: 60 }}>
                 <Suspense fallback={null}>

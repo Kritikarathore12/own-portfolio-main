@@ -27,6 +27,7 @@ app.use('/api/achievements', require('./routes/achievements'));
 app.use('/api/experience', require('./routes/experience'));
 app.use('/api/hackathons', require('./routes/hackathons'));
 app.use('/api/upload', require('./routes/upload'));
+app.use('/api/contact', require('./routes/contact'));
 
 app.get('/', (req, res) => {
     res.send('Portfolio API is running...');
