@@ -5,7 +5,7 @@ const Achievements = () => {
     const [achievements, setAchievements] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:5000/api/achievements')
+        axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/achievements`)
             .then(res => setAchievements(res.data))
             .catch(err => console.error(err));
     }, []);
