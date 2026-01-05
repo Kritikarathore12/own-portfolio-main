@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getImageUrl } from '../utils/imageHelper';
 
 const Achievements = () => {
     const [achievements, setAchievements] = useState([]);
@@ -29,7 +30,7 @@ const Achievements = () => {
                 {images.map((img, idx) => (
                     <img
                         key={idx}
-                        src={img}
+                        src={getImageUrl(img)}
                         alt={`${title} ${idx}`}
                         style={{
                             width: '100%',
@@ -61,7 +62,7 @@ const Achievements = () => {
                             {(ach.images && ach.images.length > 0) ? (
                                 <ImageCarousel images={ach.images} title={ach.title} />
                             ) : (
-                                ach.image && <img src={ach.image} alt={ach.title} style={{ width: '100%', borderRadius: '10px', marginTop: '10px' }} />
+                                ach.image && <img src={getImageUrl(ach.image)} alt={ach.title} style={{ width: '100%', borderRadius: '10px', marginTop: '10px' }} />
                             )}
 
                             <div style={{ marginTop: '10px' }}>

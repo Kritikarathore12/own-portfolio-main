@@ -18,6 +18,7 @@ import {
     rectSortingStrategy,
 } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
+import { getImageUrl } from '../utils/imageHelper';
 
 // Sortable Item Component
 const SortableItem = ({ id, item, handleEdit, handleDelete }) => {
@@ -304,7 +305,7 @@ const Dashboard = () => {
                                 <div style={{ display: 'flex', gap: '5px', flexWrap: 'wrap' }}>
                                     {form.images && form.images.map((img, i) => (
                                         <div key={i} style={{ position: 'relative' }}>
-                                            <img src={img} alt="uploaded" style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }} />
+                                            <img src={getImageUrl(img)} alt="uploaded" style={{ width: '60px', height: '60px', objectFit: 'cover', borderRadius: '5px' }} />
                                             <button
                                                 type="button"
                                                 onClick={() => {

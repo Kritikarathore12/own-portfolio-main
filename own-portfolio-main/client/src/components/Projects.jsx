@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getImageUrl } from '../utils/imageHelper';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
@@ -52,7 +53,7 @@ const Projects = () => {
                                 >
                                     <h3>{project.title}</h3>
                                     <p>{project.description}</p>
-                                    {project.image && <img src={project.image} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px', marginBottom: '15px' }} />}
+                                    {project.image && <img src={getImageUrl(project.image)} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px', marginBottom: '15px' }} />}
                                     {project.techStack && project.techStack.length > 0 && (
                                         <div style={{ marginTop: '0', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
                                             {project.techStack.map((tech, idx) => (

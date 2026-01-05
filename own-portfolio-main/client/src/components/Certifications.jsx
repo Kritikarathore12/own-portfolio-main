@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { getImageUrl } from '../utils/imageHelper';
 
 const Certifications = () => {
     const [certs, setCerts] = useState([]);
@@ -66,7 +67,7 @@ const Certifications = () => {
                             }}>
                                 {cert.image ? (
                                     <img
-                                        src={cert.image}
+                                        src={getImageUrl(cert.image)}
                                         alt={cert.title}
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
@@ -133,7 +134,7 @@ const Certifications = () => {
 
                         {selectedCert.image && (
                             <img
-                                src={selectedCert.image}
+                                src={getImageUrl(selectedCert.image)}
                                 alt={selectedCert.title}
                                 style={{
                                     maxWidth: '100%',
