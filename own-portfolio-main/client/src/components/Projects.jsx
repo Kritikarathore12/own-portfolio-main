@@ -29,12 +29,13 @@ const Projects = () => {
         target.style.setProperty("--mouse-y", `${y}px`);
     };
 
-    // Use projects directly to avoid infinite duplication issue
-    const displayProjects = projects;
+    // Duplicate projects for seamless infinite scroll loop (4x to fill wide screens)
+    const displayProjects = [...projects, ...projects, ...projects, ...projects];
 
     return (
         <section id="projects" className="container">
             <h2><span className="emoji">💻</span> <span className="text-gradient">Projects</span></h2>
+            <p className="mobile-swipe-hint">Swipe left or right to view projects</p>
             {loading ? (
                 <p>Loading projects...</p>
             ) : (
