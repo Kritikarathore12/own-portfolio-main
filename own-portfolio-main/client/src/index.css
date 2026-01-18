@@ -744,13 +744,17 @@ header .container {
     flex-direction: column;
     text-align: center;
     justify-content: center;
-    padding-top: 30px;
+    padding-top: 10px;
+    /* Reduced padding */
+    gap: 10px;
+    /* Reduced gap */
   }
 
   .avatar {
     justify-content: center;
     width: 100%;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
+    /* Reduced margin */
   }
 
   .avatar img {
@@ -1074,8 +1078,15 @@ footer {
 
   .hero h1 .text-gradient {
     font-size: 2.5rem;
+    line-height: 1.2;
+    /* Improved line height */
     word-break: break-word;
     /* Prevent overflow if text is too long */
+  }
+
+  .hero h1 {
+    margin-bottom: 0.5rem;
+    /* Reduced margin */
   }
 }
 
@@ -1099,5 +1110,25 @@ footer {
     width: 300px;
     /* Scale down image slightly */
     height: 300px;
+  }
+}
+
+/* Certifications Grid System */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 1024px) {
+  .cert-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .cert-grid {
+    grid-template-columns: 1fr;
   }
 }

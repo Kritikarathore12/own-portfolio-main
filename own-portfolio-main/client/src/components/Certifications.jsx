@@ -28,12 +28,7 @@ const Certifications = () => {
             <h2><span className="emoji">📜</span> <span className="text-gradient">Certifications</span></h2>
 
             {certs.length === 0 ? <p>No certifications added yet.</p> : (
-                <div style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(3, 1fr)',
-                    gap: '2rem',
-                    marginTop: '2rem'
-                }}>
+                <div className="cert-grid">
                     {certs.slice(0, showAll ? certs.length : 3).map(cert => (
                         <div
                             key={cert._id}
