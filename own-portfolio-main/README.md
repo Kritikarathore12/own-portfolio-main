@@ -43,11 +43,10 @@ Here are some of the key projects featured in this portfolio:
 
 | Project | Description | Tech Stack |
 | :--- | :--- | :--- |
-| **AI Analytics Dashboard** | A comprehensive dashboard for visualizing AI model performance metrics in real-time. | React, Python, TensorFlow |
-| **E-commerce Platform** | Full-featured online store with cart, user authentication, and payment gateway integration. | MERN, Redux, Stripe |
-| **Real-time Chat App** | Instant messaging application supporting private and group chats with multimedia sharing. | Socket.io, Node, React |
-| **Portfolio Website** | This very website! showcasing skills, projects, and professional experience. | React, Framer Motion, CSS3 |
-| **Task Manager Pro** | Productivity tool for team collaboration, task assignment, and progress tracking. | Vue.js, Firebase, Tailwind |
+| **Chaitanya (Early Dementia Detection)** | AI designed to provide companionship and cognitive stimulation for the elderly, helping users reminisce and stay engaged. | React, TypeScript, Node.js, MongoDB |
+| **MindMend** | AI-based mental wellness platform with mood assessment, sentiment analysis, and personalized therapy chat. | React, TypeScript, Supabase, PostgreSQL |
+| **QwizWiz** | Interactive quiz platform enabling dynamic question flow, real-time scoring, and user engagement. | MongoDB, Express, Node.js, JavaScript |
+| **Portfolio Website** | This very website! Showcasing skills, projects, and professional experience with 3D elements. | React, Framer Motion, Tailwind, MongoDB |
 
 ---
 
