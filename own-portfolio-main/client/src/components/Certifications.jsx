@@ -5,6 +5,7 @@ import { getImageUrl } from '../utils/imageHelper';
 const Certifications = () => {
     const [certs, setCerts] = useState([]);
     const [selectedCert, setSelectedCert] = useState(null);
+    const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/certifications`)
@@ -33,7 +34,7 @@ const Certifications = () => {
                     gap: '2rem',
                     marginTop: '2rem'
                 }}>
-                    {certs.map(cert => (
+                    {certs.slice(0, showAll ? certs.length : 3).map(cert => (
                         <div
                             key={cert._id}
                             className="cert-card"
@@ -85,6 +86,34 @@ const Certifications = () => {
                             </div>
                         </div>
                     ))}
+                </div>
+            )}
+
+            {certs.length > 3 && (
+                <div style={{ textAlign: 'center', marginTop: '3rem' }}>
+                    <button
+                        onClick={() => setShowAll(!showAll)}
+                        style={{
+                            background: 'transparent',
+                            border: '1px solid #3498db',
+                            color: '#3498db',
+                            padding: '10px 30px',
+                            borderRadius: '30px',
+                            fontSize: '1rem',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease'
+                        }}
+                        onMouseEnter={e => {
+                            e.currentTarget.style.background = '#3498db';
+                            e.currentTarget.style.color = 'white';
+                        }}
+                        onMouseLeave={e => {
+                            e.currentTarget.style.background = 'transparent';
+                            e.currentTarget.style.color = '#3498db';
+                        }}
+                    >
+                        {showAll ? 'Show Less' : 'View All Certifications'}
+                    </button>
                 </div>
             )}
 

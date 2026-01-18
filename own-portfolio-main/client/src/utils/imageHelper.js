@@ -16,7 +16,7 @@ export const getImageUrl = (path) => {
 
     // 2. Handle relative paths (e.g., "/uploads/file.jpg")
     if (path.startsWith('/')) {
-        return `${API_URL}${path}`;
+        return `${API_URL}${encodeURI(path)}`;
     }
 
     // 3. Handle absolute paths (e.g., "https://placehold.co/...")
