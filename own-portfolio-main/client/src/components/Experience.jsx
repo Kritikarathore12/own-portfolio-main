@@ -1,13 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { experience as localExps } from '../data/experience';
 
 const Experience = () => {
-    const [exps, setExps] = useState([]);
+    const [exps, setExps] = useState(localExps);
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/experience`)
-            .then(res => setExps(res.data))
-            .catch(err => console.error(err));
+            .then(res => {
+                const backendExps = res.data;
+                const expMap = new Map(localExps.map(e => [e._id, e]));
+                backendExps.forEach(e => expMap.set(e._id, e));
+                setExps(Array.from(expMap.values()));
+            })
+            .catch(err => console.error('Using local experience only:', err));
     }, []);
 
     return (

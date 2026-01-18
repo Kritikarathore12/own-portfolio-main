@@ -103,4 +103,4 @@ Feel free to reach out to me for collaborations or just a friendly hello!
 
 ---
 
-Developed with ❤️ by **Kritika Rathore**
+Developed by **Kritika Rathore**

@@ -98,7 +98,7 @@ const Dashboard = () => {
     const token = localStorage.getItem('token');
 
     const [editingId, setEditingId] = useState(null);
-    const [activeId, setActiveId] = useState(null); // For DragOverlay if needed
+    // const [activeId, setActiveId] = useState(null); // Unused
 
     const API_URL = `${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api`;
 
@@ -113,6 +113,15 @@ const Dashboard = () => {
         })
     );
 
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(`${API_URL}/${tab}`);
+            setData(res.data);
+        } catch (err) {
+            console.error(err);
+        }
+    };
+
     useEffect(() => {
         if (!token) {
             navigate('/admin');
@@ -122,15 +131,6 @@ const Dashboard = () => {
         setForm({});
         setEditingId(null);
     }, [tab, token, navigate]);
-
-    const fetchData = async () => {
-        try {
-            const res = await axios.get(`${API_URL}/${tab}`);
-            setData(res.data);
-        } catch (err) {
-            console.error(err);
-        }
-    };
 
     const handleDragEnd = async (event) => {
         const { active, over } = event;

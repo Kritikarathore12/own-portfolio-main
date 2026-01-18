@@ -1,14 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { achievements as localAchievements } from '../data/achievements';
 import { getImageUrl } from '../utils/imageHelper';
 
 const Achievements = () => {
-    const [achievements, setAchievements] = useState([]);
+    const [achievements, setAchievements] = useState(localAchievements);
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/achievements`)
-            .then(res => setAchievements(res.data))
-            .catch(err => console.error(err));
+            .then(res => {
+                const backendAchievements = res.data;
+                const achMap = new Map(localAchievements.map(a => [a._id, a]));
+                backendAchievements.forEach(a => achMap.set(a._id, a));
+                setAchievements(Array.from(achMap.values()));
+            })
+            .catch(err => console.error('Using local achievements only:', err));
     }, []);
 
     // Carousel sub-component

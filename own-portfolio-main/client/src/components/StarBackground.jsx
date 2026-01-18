@@ -75,9 +75,9 @@ const FloatingIcons = () => {
 
             while (!valid && retries < maxRetries) {
                 position = [
-                    (Math.random() - 0.5) * 50, // Wider x spread
-                    (Math.random() - 0.5) * 35, // Wider y spread
-                    (Math.random() - 0.5) * 15 - 5 // z spread
+                    (Math.random() - 0.5) * 50,
+                    (Math.random() - 0.5) * 35,
+                    (Math.random() - 0.5) * 15 - 5
                 ];
 
                 valid = true;
@@ -98,13 +98,13 @@ const FloatingIcons = () => {
             positions.push(position);
             return { ...icon, position };
         });
-    }, []);
+    }, []); // Removed icons dependency as it is constant-derived
 
     return (
         <group>
-            {positionedIcons.map(({ Component, id, position }) => (
+            {positionedIcons.map(({ Component: Icon, id, position }) => (
                 <FloatingIconWrapper key={id} position={position}>
-                    <Component />
+                    <Icon />
                 </FloatingIconWrapper>
             ))}
         </group>

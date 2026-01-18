@@ -1,0 +1,70 @@
+
+> client@0.0.0 lint
+> eslint .
+
+
+C:\Users\HP\Downloads\own-portfolio-main-1\own-portfolio-main\client\src\components\Hero.jsx
+  9:11  warning  The 'roles' array makes the dependencies of useEffect Hook (at line 33) change on every render. Move it inside the useEffect callback. Alternatively, wrap the initialization of 'roles' in its own useMemo() Hook  react-hooks/exhaustive-deps
+
+C:\Users\HP\Downloads\own-portfolio-main-1\own-portfolio-main\client\src\components\Projects.jsx
+  50:14  error  'loading' is not defined  no-undef
+
+C:\Users\HP\Downloads\own-portfolio-main-1\own-portfolio-main\client\src\components\StarBackground.jsx
+   78:22  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  76 |             while (!valid && retries < maxRetries) {
+  77 |                 position = [
+> 78 |                     (Math.random() - 0.5) * 50,
+     |                      ^^^^^^^^^^^^^ Cannot call impure function
+  79 |                     (Math.random() - 0.5) * 35,
+  80 |                     (Math.random() - 0.5) * 15 - 5
+  81 |                 ];  react-hooks/purity
+   79:22  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  77 |                 position = [
+  78 |                     (Math.random() - 0.5) * 50,
+> 79 |                     (Math.random() - 0.5) * 35,
+     |                      ^^^^^^^^^^^^^ Cannot call impure function
+  80 |                     (Math.random() - 0.5) * 15 - 5
+  81 |                 ];
+  82 |                                                       react-hooks/purity
+   80:22  error    Error: Cannot call impure function during render
+
+`Math.random` is an impure function. Calling an impure function can produce unstable results that update unpredictably when the component happens to re-render. (https://react.dev/reference/rules/components-and-hooks-must-be-pure#components-and-hooks-must-be-idempotent).
+
+  78 |                     (Math.random() - 0.5) * 50,
+  79 |                     (Math.random() - 0.5) * 35,
+> 80 |                     (Math.random() - 0.5) * 15 - 5
+     |                      ^^^^^^^^^^^^^ Cannot call impure function
+  81 |                 ];
+  82 |
+  83 |                 valid = true;                                                      react-hooks/purity
+  101:8   warning  React Hook useMemo has a missing dependency: 'icons'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     react-hooks/exhaustive-deps
+  105:37  error    'Component' is defined but never used                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      no-unused-vars
+
+C:\Users\HP\Downloads\own-portfolio-main-1\own-portfolio-main\client\src\pages\Dashboard.jsx
+  130:9  error    Error: Calling setState synchronously within an effect can trigger cascading renders
+
+Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
+* Update external systems with the latest state from React.
+* Subscribe for updates from some external system, calling setState in a callback function when external state changes.
+
+Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
+
+  128 |             return;
+  129 |         }
+> 130 |         fetchData();
+      |         ^^^^^^^^^ Avoid calling setState() directly within an effect
+  131 |         setForm({});
+  132 |         setEditingId(null);
+  133 |     }, [tab, token, navigate]);  react-hooks/set-state-in-effect
+  133:8  warning  React Hook useEffect has a missing dependency: 'fetchData'. Either include it or remove the dependency array                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         react-hooks/exhaustive-deps
+  137:9  error    'setActiveId' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         no-undef
+  171:9  error    'setActiveId' is not defined                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         no-undef
+
+✖ 11 problems (8 errors, 3 warnings)
+

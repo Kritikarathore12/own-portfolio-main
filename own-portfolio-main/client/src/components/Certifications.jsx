@@ -1,22 +1,35 @@
-import React, { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { certifications as localCerts } from '../data/certifications';
 import { getImageUrl } from '../utils/imageHelper';
 
 const Certifications = () => {
-    const [certs, setCerts] = useState([]);
+    const [certs, setCerts] = useState(localCerts);
     const [selectedCert, setSelectedCert] = useState(null);
     const [showAll, setShowAll] = useState(false);
 
     useEffect(() => {
         axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/certifications`)
-            .then(res => setCerts(res.data))
-            .catch(err => console.error(err));
+            .then(res => {
+                const backendCerts = res.data;
+                const certMap = new Map(localCerts.map(c => [c._id, c]));
+                backendCerts.forEach(c => certMap.set(c._id, c));
+                setCerts(Array.from(certMap.values()));
+            })
+            .catch(err => console.error('Using local certifications only:', err));
     }, []);
 
     const openModal = (cert) => {
-        document.body.style.overflow = 'hidden'; // Prevent scrolling
         setSelectedCert(cert);
     };
+
+    useEffect(() => {
+        if (selectedCert) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = 'auto'; // Restore
+        }
+    }, [selectedCert]);
 
     const closeModal = () => {
         document.body.style.overflow = 'unset';
