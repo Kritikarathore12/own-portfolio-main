@@ -63,7 +63,7 @@ const Contact = () => {
                 </form>
                 <div className="contact-social">
                     <h3>Connect with me</h3>
-                    <div style={{ display: 'flex', gap: '15px' }}>
+                    <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', justifyContent: 'center' }}>
                         <a href="https://linkedin.com/in/kritika-rathore12" target="_blank" rel="noopener noreferrer" className="social-link linkedin">
                             <i className="fab fa-linkedin"></i>
                             <span>LinkedIn</span>

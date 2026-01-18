@@ -21,7 +21,7 @@ import { CSS } from '@dnd-kit/utilities';
 import { getImageUrl } from '../utils/imageHelper';
 
 // Sortable Item Component
-const SortableItem = ({ id, item, handleEdit, handleDelete }) => {
+const SortableItem = ({ id, item, handleEdit, handleDelete, handleToggleVisibility, showVisibilityToggle }) => {
     const {
         attributes,
         listeners,
@@ -60,6 +60,12 @@ const SortableItem = ({ id, item, handleEdit, handleDelete }) => {
             >
                 ☰
             </div>
+
+            {showVisibilityToggle && (
+                <div style={{ position: 'absolute', top: '10px', right: '130px', cursor: 'pointer', fontSize: '1.2rem' }} onClick={(e) => { e.stopPropagation(); handleToggleVisibility(item); }}>
+                    {item.isVisible !== false ? '👁️' : '🙈'}
+                </div>
+            )}
 
             <div style={{ paddingLeft: '30px' }}>
                 <h4>{item.title || item.role}</h4>
@@ -145,6 +151,19 @@ const Dashboard = () => {
                 console.error('Reorder failed', err);
                 fetchData(); // Revert on failure
             }
+        }
+    };
+
+    const handleToggleVisibility = async (item) => {
+        try {
+            const updatedItem = { ...item, isVisible: !item.isVisible };
+            // Optimistic update
+            setData(data.map(d => d._id === item._id ? updatedItem : d));
+
+            await axios.put(`${API_URL}/${tab}/${item._id}`, updatedItem, { headers: { 'x-auth-token': token } });
+        } catch (err) {
+            console.error('Visibility toggle failed', err);
+            fetchData();
         }
     };
 
@@ -368,6 +387,8 @@ const Dashboard = () => {
                                     item={item}
                                     handleEdit={handleEdit}
                                     handleDelete={handleDelete}
+                                    handleToggleVisibility={handleToggleVisibility}
+                                    showVisibilityToggle={tab === 'projects'}
                                 />
                             ))}
                         </div>

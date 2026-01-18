@@ -42,9 +42,12 @@ h2 {
   font-size: 2.2rem;
   margin-bottom: 2rem;
   position: relative;
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
+  /* Allow wrapping on small screens */
   align-items: center;
-  gap: 15px;
+  gap: 10px;
+  /* Reduce gap */
   color: #f3f4f6;
 }
 
@@ -82,6 +85,14 @@ h2::after {
   padding: 40px 0;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 20px 0;
+    width: 95%;
+    /* Use more width on mobile */
+  }
+}
+
 /* Header */
 header {
   background: rgba(15, 23, 42, 0.8);
@@ -97,7 +108,7 @@ header {
 }
 
 header .container {
-  padding: 25px 0;
+  padding: 15px 0;
   width: 90%;
   max-width: 1100px;
   margin: auto;
@@ -128,14 +139,19 @@ header .container {
     /* Hidden by default on mobile */
     flex-direction: column;
     position: absolute;
-    top: 60px;
+    top: 70px;
+    /* Push down slightly more */
     right: 20px;
+    z-index: 1001;
+    /* Ensure it's above everything */
     background: rgba(15, 23, 42, 0.98);
     backdrop-filter: blur(15px);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     width: 200px;
+    max-width: 80vw;
+    /* Ensure it doesn't overflow very small screens */
     text-align: center;
   }
 
@@ -392,8 +408,9 @@ header .container {
 /* Cards (Generic) */
 .cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 30px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
 }
 
 /* Scrolling Projects */
@@ -425,8 +442,17 @@ header .container {
 
 /* Ensure cards in scroller maintain width */
 .project-track .card {
-  min-width: 350px;
-  max-width: 350px;
+  min-width: 300px;
+  max-width: 300px;
+}
+
+@media (max-width: 480px) {
+  .project-track .card {
+    min-width: 250px;
+    max-width: 250px;
+    padding: 20px;
+    /* Reduce padding on small cards */
+  }
 }
 
 .card {
@@ -728,8 +754,8 @@ header .container {
   }
 
   .avatar img {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
   }
 
   .hero-text {
@@ -901,8 +927,10 @@ footer {
   /* Dark bg */
   border: 1px solid #334155;
   border-radius: 20px;
+  border-radius: 20px;
   padding: 30px;
-  width: 300px;
+  width: 100%;
+  max-width: 300px;
   height: 350px;
   /* Fixed height for consistency */
   display: flex;
@@ -1045,7 +1073,9 @@ footer {
   }
 
   .hero h1 .text-gradient {
-    font-size: 3rem;
+    font-size: 2.5rem;
+    word-break: break-word;
+    /* Prevent overflow if text is too long */
   }
 }
 

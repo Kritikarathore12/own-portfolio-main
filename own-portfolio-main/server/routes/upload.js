@@ -28,9 +28,9 @@ router.post('/', upload.single('file'), (req, res) => {
     if (!req.file) {
         return res.status(400).json({ msg: 'No file uploaded' });
     }
-    // Return the URL to access the file
-    const fileUrl = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
-    res.json({ fileName: req.file.filename, filePath: fileUrl });
+    // Return the relative path
+    const filePath = `/uploads/${req.file.filename}`;
+    res.json({ fileName: req.file.filename, filePath: filePath });
 });
 
 module.exports = router;

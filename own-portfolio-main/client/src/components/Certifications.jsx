@@ -29,7 +29,7 @@ const Certifications = () => {
             {certs.length === 0 ? <p>No certifications added yet.</p> : (
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+                    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
                     gap: '2rem',
                     marginTop: '2rem'
                 }}>

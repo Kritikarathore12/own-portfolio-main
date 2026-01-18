@@ -10,7 +10,7 @@ const Projects = () => {
         const fetchProjects = async () => {
             try {
                 const res = await axios.get(`${import.meta.env.VITE_API_URL || 'http://localhost:5000'}/api/projects`);
-                setProjects(res.data);
+                setProjects(res.data.filter(project => project.isVisible !== false));
                 setLoading(false);
             } catch (err) {
                 console.error('Error fetching projects:', err);
@@ -55,9 +55,9 @@ const Projects = () => {
                                     <p>{project.description}</p>
                                     {project.image && <img src={getImageUrl(project.image)} alt={project.title} style={{ width: '100%', marginTop: '15px', borderRadius: '10px', marginBottom: '15px' }} />}
                                     {project.techStack && project.techStack.length > 0 && (
-                                        <div style={{ marginTop: '0', display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '10px' }}>
+                                        <div style={{ marginTop: '0', display: 'flex', flexWrap: 'wrap', gap: '8px', justifyContent: 'center' }}>
                                             {project.techStack.map((tech, idx) => (
-                                                <span className="chip" key={idx} style={{ margin: 0, textAlign: 'center', width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '5px' }}>{tech}</span>
+                                                <span className="chip" key={idx} style={{ margin: 0, fontSize: '0.8rem' }}>{tech}</span>
                                             ))}
                                         </div>
                                     )}

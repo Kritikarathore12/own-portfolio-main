@@ -34,14 +34,13 @@ router.put('/reorder', auth, async (req, res) => {
 
 // POST api/projects (Private)
 router.post('/', auth, async (req, res) => {
-    const { title, description, techStack, image, link } = req.body;
+    const { title, description, techStack, image, link, isVisible } = req.body;
     try {
         const newProject = new Project({
-            title,
-            description,
             techStack,
             image,
-            link
+            link,
+            isVisible
         });
         const project = await newProject.save();
         res.json(project);
@@ -53,14 +52,14 @@ router.post('/', auth, async (req, res) => {
 
 // PUT api/projects/:id (Private)
 router.put('/:id', auth, async (req, res) => {
-    const { title, description, techStack, image, link } = req.body;
+    const { title, description, techStack, image, link, isVisible } = req.body;
     try {
         let project = await Project.findById(req.params.id);
         if (!project) return res.status(404).json({ msg: 'Project not found' });
 
         project = await Project.findByIdAndUpdate(
             req.params.id,
-            { $set: { title, description, techStack, image, link } },
+            { $set: { title, description, techStack, image, link, isVisible } },
             { new: true }
         );
         res.json(project);
