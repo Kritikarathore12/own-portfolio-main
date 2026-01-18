@@ -1,0 +1,145 @@
+{
+  "certifications": [
+    {
+      "_id": "6957bf94d83caeca3e098e19",
+      "title": "Web Development",
+      "issuer": "IBM SkillsBuild",
+      "date": "28 Mar 2024",
+      "image": "http://localhost:5000/uploads/1767358350856-Screenshot 2026-01-02 182010.png",
+      "__v": 0,
+      "order": 0
+    },
+    {
+      "_id": "6957f4662c275af474a55c84",
+      "title": "Python Essentials 1",
+      "issuer": "Cisco Networking Academy",
+      "date": "02 June 2024",
+      "image": "http://localhost:5000/uploads/1767371876500-Screenshot 2026-01-02 220640.png",
+      "__v": 0,
+      "order": 3
+    },
+    {
+      "_id": "6957f53c5e99e09341ea2462",
+      "title": "Python Essentials 2",
+      "issuer": "Cisco Networking Academy",
+      "date": "02 June 2024",
+      "image": "http://localhost:5000/uploads/1767372184375-Screenshot 2026-01-02 221248.png",
+      "__v": 0,
+      "order": 4
+    },
+    {
+      "_id": "6957f6145e99e09341ea2472",
+      "title": "Career Essentials in Software Development",
+      "issuer": "Microsoft and LinkedIn Career ",
+      "date": "10 July 2024",
+      "image": "http://localhost:5000/uploads/1767372304780-Screenshot 2026-01-02 221453.png",
+      "__v": 0,
+      "order": 1
+    },
+    {
+      "_id": "6957f6985e99e09341ea2475",
+      "title": "Project Management Fundamentals",
+      "issuer": "IBM SkillsBuild",
+      "date": "25 February 2025",
+      "image": "http://localhost:5000/uploads/1767372438424-Screenshot 2026-01-02 221709.png",
+      "__v": 0,
+      "order": 2
+    },
+    {
+      "_id": "6957f6fc5e99e09341ea2478",
+      "title": "Career Essentials in Data Analysis ",
+      "issuer": "Microsoft and LinkedIn",
+      "date": "05 July 2025",
+      "image": "http://localhost:5000/uploads/1767372539300-Screenshot 2026-01-02 221846.png",
+      "__v": 0,
+      "order": 5
+    }
+  ],
+  "experience": [
+    {
+      "_id": "695b869f66d25b5c160dfd9c",
+      "role": "Current Senior Council(Ex-President)",
+      "company": "SPECTRA CSE",
+      "date": "Nov 2025-Present",
+      "order": 1,
+      "__v": 0,
+      "description": "Senior Council AT Departmental Club CSE-AITR"
+    },
+    {
+      "_id": "695b87de66d25b5c160dfd9f",
+      "role": "Authored and Published Research Paper",
+      "company": "5th IEEE International conference IEEE Xplore(ICTBIG-2025) ",
+      "date": "12th-13th Dec 2025",
+      "description": "Mindmend: AI-Powered mental health Support Platform",
+      "order": 0,
+      "__v": 0
+    },
+    {
+      "_id": "695b887366d25b5c160dfda2",
+      "role": "Volunteered",
+      "company": "Career Development Cell",
+      "date": "Nov 2024-2025",
+      "description": "More than 10+ Tech Companies",
+      "order": 2,
+      "__v": 0
+    },
+    {
+      "_id": "695b8b91d5499e80df8ce7d3",
+      "role": "Event Manager",
+      "company": "Computer Society India-AITR",
+      "date": "Jan 2024-Jan 2025",
+      "description": "Organized and managed multiple Tech/Cultural events.",
+      "order": 3,
+      "__v": 0
+    }
+  ],
+  "achievements": [
+    {
+      "_id": "6957ff285c1f883a01395e13",
+      "title": "KRIYETA 4.0",
+      "description": "Secured 1st position in the KRIYETA 4.0(National-Level Hackathon) demonstrating innovation.",
+      "tags": [
+        "Winner 🥇",
+        "Hackathon"
+      ],
+      "images": [
+        "http://localhost:5000/uploads/1767607541195-WhatsApp Image 2026-01-05 at 3.34.20 PM.jpeg",
+        "http://localhost:5000/uploads/1767607545867-WhatsApp Image 2026-01-05 at 3.34.21 PM.jpeg",
+        "http://localhost:5000/uploads/1767607550274-WhatsApp Image 2026-01-05 at 3.34.25 PM.jpeg"
+      ],
+      "link": "",
+      "order": 0,
+      "__v": 0
+    },
+    {
+      "_id": "6957ff285c1f883a01395e14",
+      "title": "Hackathon Journey",
+      "description": "Actively took part in 5+ hackathons, focusing on learning and innovation.\nCollaborated with peers to brainstorm, design, and implement impactful solutions.\nAdapted quickly to new technologies and frameworks within limited timeframes.\nDeveloped strong teamwork, creativity, and time-management skills.\n\n\n",
+      "tags": [
+        "5+ Hackathons",
+        "Experience"
+      ],
+      "images": [],
+      "link": "",
+      "order": 0,
+      "__v": 0
+    },
+    {
+      "_id": "6957ff285c1f883a01395e15",
+      "title": "PRAYATNA 2.0",
+      "description": "Achieved top rank in the prestigious PRAYATNA 2.0 hackathon event (National-Level Hackathon)",
+      "tags": [
+        "Winner 🏆",
+        "Hackathon"
+      ],
+      "images": [
+        "http://localhost:5000/uploads/1767608959922-fff.jpeg",
+        "http://localhost:5000/uploads/1767609151833-WhatsApp Image 2026-01-05 at 3.42.09 PM.jpeg",
+        "http://localhost:5000/uploads/1767609157118-WhatsApp Image 2026-01-05 at 3.42.10 PM.jpeg"
+      ],
+      "link": "",
+      "order": 0,
+      "__v": 0
+    }
+  ]
+}
