@@ -30,7 +30,7 @@ const Certifications = () => {
             {certs.length === 0 ? <p>No certifications added yet.</p> : (
                 <div style={{
                     display: 'grid',
-                    gridTemplateColumns: 'repeat(auto-fill, minmax(250px, 1fr))',
+                    gridTemplateColumns: 'repeat(3, 1fr)',
                     gap: '2rem',
                     marginTop: '2rem'
                 }}>
@@ -87,119 +87,124 @@ const Certifications = () => {
                         </div>
                     ))}
                 </div>
-            )}
+            )
+            }
 
-            {certs.length > 3 && (
-                <div style={{ textAlign: 'center', marginTop: '3rem' }}>
-                    <button
-                        onClick={() => setShowAll(!showAll)}
-                        style={{
-                            background: 'transparent',
-                            border: '1px solid #3498db',
-                            color: '#3498db',
-                            padding: '10px 30px',
-                            borderRadius: '30px',
-                            fontSize: '1rem',
-                            cursor: 'pointer',
-                            transition: 'all 0.3s ease'
-                        }}
-                        onMouseEnter={e => {
-                            e.currentTarget.style.background = '#3498db';
-                            e.currentTarget.style.color = 'white';
-                        }}
-                        onMouseLeave={e => {
-                            e.currentTarget.style.background = 'transparent';
-                            e.currentTarget.style.color = '#3498db';
-                        }}
-                    >
-                        {showAll ? 'Show Less' : 'View All Certifications'}
-                    </button>
-                </div>
-            )}
-
-            {/* Modal */}
-            {selectedCert && (
-                <div
-                    onClick={closeModal}
-                    style={{
-                        position: 'fixed',
-                        top: 0,
-                        left: 0,
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.9)',
-                        zIndex: 1000,
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        padding: '20px',
-                        backdropFilter: 'blur(5px)'
-                    }}
-                >
-                    <div
-                        onClick={e => e.stopPropagation()}
-                        style={{
-                            position: 'relative',
-                            maxWidth: '90%',
-                            maxHeight: '90%',
-                            animation: 'fadeIn 0.3s ease'
-                        }}
-                    >
+            {
+                certs.length > 3 && (
+                    <div style={{ textAlign: 'center', marginTop: '3rem' }}>
                         <button
-                            onClick={closeModal}
+                            onClick={() => setShowAll(!showAll)}
                             style={{
-                                position: 'absolute',
-                                top: '-40px',
-                                right: '-40px',
                                 background: 'transparent',
-                                border: 'none',
-                                color: 'white',
-                                fontSize: '2rem',
-                                cursor: 'pointer'
+                                border: '1px solid #3498db',
+                                color: '#3498db',
+                                padding: '10px 30px',
+                                borderRadius: '30px',
+                                fontSize: '1rem',
+                                cursor: 'pointer',
+                                transition: 'all 0.3s ease'
+                            }}
+                            onMouseEnter={e => {
+                                e.currentTarget.style.background = '#3498db';
+                                e.currentTarget.style.color = 'white';
+                            }}
+                            onMouseLeave={e => {
+                                e.currentTarget.style.background = 'transparent';
+                                e.currentTarget.style.color = '#3498db';
                             }}
                         >
-                            &times;
+                            {showAll ? 'Show Less' : 'View All Certifications'}
                         </button>
+                    </div>
+                )
+            }
 
-                        {selectedCert.image && (
-                            <img
-                                src={getImageUrl(selectedCert.image)}
-                                alt={selectedCert.title}
+            {/* Modal */}
+            {
+                selectedCert && (
+                    <div
+                        onClick={closeModal}
+                        style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            width: '100%',
+                            height: '100%',
+                            backgroundColor: 'rgba(0, 0, 0, 0.9)',
+                            zIndex: 1000,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: '20px',
+                            backdropFilter: 'blur(5px)'
+                        }}
+                    >
+                        <div
+                            onClick={e => e.stopPropagation()}
+                            style={{
+                                position: 'relative',
+                                maxWidth: '90%',
+                                maxHeight: '90%',
+                                animation: 'fadeIn 0.3s ease'
+                            }}
+                        >
+                            <button
+                                onClick={closeModal}
                                 style={{
-                                    maxWidth: '100%',
-                                    maxHeight: '85vh',
-                                    boxShadow: '0 0 30px rgba(0,0,0,0.5)',
-                                    borderRadius: '4px'
+                                    position: 'absolute',
+                                    top: '-40px',
+                                    right: '-40px',
+                                    background: 'transparent',
+                                    border: 'none',
+                                    color: 'white',
+                                    fontSize: '2rem',
+                                    cursor: 'pointer'
                                 }}
-                            />
-                        )}
+                            >
+                                &times;
+                            </button>
 
-                        <div style={{ marginTop: '1rem', textAlign: 'center', color: 'white' }}>
-                            <h3>{selectedCert.title}</h3>
-                            <p>{selectedCert.issuer} | {selectedCert.date}</p>
-                            {selectedCert.link && (
-                                <a
-                                    href={selectedCert.link}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                            {selectedCert.image && (
+                                <img
+                                    src={getImageUrl(selectedCert.image)}
+                                    alt={selectedCert.title}
                                     style={{
-                                        display: 'inline-block',
-                                        marginTop: '10px',
-                                        color: '#3498db',
-                                        textDecoration: 'none',
-                                        border: '1px solid #3498db',
-                                        padding: '5px 15px',
-                                        borderRadius: '20px'
+                                        maxWidth: '100%',
+                                        maxHeight: '85vh',
+                                        boxShadow: '0 0 30px rgba(0,0,0,0.5)',
+                                        borderRadius: '4px'
                                     }}
-                                >
-                                    Verify Credential
-                                </a>
+                                />
                             )}
+
+                            <div style={{ marginTop: '1rem', textAlign: 'center', color: 'white' }}>
+                                <h3>{selectedCert.title}</h3>
+                                <p>{selectedCert.issuer} | {selectedCert.date}</p>
+                                {selectedCert.link && (
+                                    <a
+                                        href={selectedCert.link}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        style={{
+                                            display: 'inline-block',
+                                            marginTop: '10px',
+                                            color: '#3498db',
+                                            textDecoration: 'none',
+                                            border: '1px solid #3498db',
+                                            padding: '5px 15px',
+                                            borderRadius: '20px'
+                                        }}
+                                    >
+                                        Verify Credential
+                                    </a>
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </section>
+                )
+            }
+        </section >
     );
 };
 
