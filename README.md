@@ -46,7 +46,6 @@ Here are some of the key projects featured in this portfolio:
 | **Chaitanya (Early Dementia Detection)** | AI designed to provide companionship and cognitive stimulation for the elderly, helping users reminisce and stay engaged. | React, TypeScript, Node.js, MongoDB |
 | **MindMend** | AI-based mental wellness platform with mood assessment, sentiment analysis, and personalized therapy chat. | React, TypeScript, Supabase, PostgreSQL |
 | **QwizWiz** | Interactive quiz platform enabling dynamic question flow, real-time scoring, and user engagement. | MongoDB, Express, Node.js, JavaScript |
-| **Portfolio Website** | This very website! Showcasing skills, projects, and professional experience with 3D elements. | React, Framer Motion, Tailwind, MongoDB |
 
 ---
 
