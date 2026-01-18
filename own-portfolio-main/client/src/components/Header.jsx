@@ -13,7 +13,7 @@ const Header = () => {
                 <nav>
                     <ul id="navLinks" className={isOpen ? 'active' : ''}>
                         {/* Note: Using anchor links for single page scroll if on Home */}
-                        <li><a href="/#about" onClick={() => setIsOpen(false)}>About</a></li>
+                        <li><a href="/" onClick={(e) => { e.preventDefault(); window.scrollTo(0, 0); setIsOpen(false); }}>About</a></li>
                         <li><a href="/#skills" onClick={() => setIsOpen(false)}>Skills</a></li>
                         <li><a href="/#projects" onClick={() => setIsOpen(false)}>Projects</a></li>
                         <li><a href="/#achievements" onClick={() => setIsOpen(false)}>Hackathons</a></li>

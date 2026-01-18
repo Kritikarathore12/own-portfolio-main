@@ -250,6 +250,13 @@ header .container {
   color: #f8fafc;
 }
 
+.hero-subtitle {
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  min-height: 60px;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
 .hero p {
   font-size: 1.25rem;
   color: #cbd5e1;
@@ -447,11 +454,30 @@ header .container {
 }
 
 @media (max-width: 480px) {
+  .project-scroller {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    /* Smooth scrolling on iOS */
+  }
+
+  .project-track {
+    width: auto;
+    /* Let content dictate width */
+    animation: none;
+    /* Disable marquee */
+    gap: 15px;
+    padding: 10px 20px;
+    /* Add padding for snap alignment */
+  }
+
   .project-track .card {
-    min-width: 250px;
-    max-width: 250px;
-    padding: 20px;
-    /* Reduce padding on small cards */
+    min-width: 85vw;
+    /* Almost full width */
+    max-width: 85vw;
+    scroll-snap-align: center;
+    /* Center the card */
+    margin-right: 0;
   }
 }
 
@@ -520,27 +546,88 @@ header .container {
 /* Timeline */
 .timeline {
   list-style: none;
-  padding: 0 0 0 20px;
-  border-left: 3px solid #e5e7eb;
+  padding: 0;
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: #e5e7eb;
+  transform: translateX(-50%);
 }
 
 .timeline li {
-  margin-bottom: 35px;
+  margin-bottom: 40px;
   position: relative;
-  padding-left: 25px;
+  width: 50%;
+  padding: 0 40px;
+  box-sizing: border-box;
 }
 
-.timeline li::before {
+.timeline li:nth-child(odd) {
+  left: 0;
+  text-align: right;
+}
+
+.timeline li:nth-child(even) {
+  left: 50%;
+  text-align: left;
+}
+
+/* Timeline Dots */
+.timeline li::after {
   content: '';
-  width: 16px;
-  height: 16px;
-  background: var(--accent);
-  border-radius: 50%;
   position: absolute;
-  left: -9.5px;
-  top: 6px;
+  top: 15px;
+  width: 20px;
+  height: 20px;
+  background: var(--accent);
   border: 4px solid #fff;
-  box-shadow: 0 0 0 2px var(--accent);
+  border-radius: 50%;
+  z-index: 10;
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+}
+
+.timeline li:nth-child(odd)::after {
+  right: -12px;
+}
+
+.timeline li:nth-child(even)::after {
+  left: -12px;
+}
+
+/* Mobile Timeline */
+@media (max-width: 768px) {
+  .timeline::before {
+    left: 20px;
+    /* Align line to left */
+  }
+
+  .timeline li {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 10px;
+  }
+
+  .timeline li:nth-child(odd),
+  .timeline li:nth-child(even) {
+    left: 0;
+    text-align: left;
+  }
+
+  .timeline li:nth-child(odd)::after,
+  .timeline li:nth-child(even)::after {
+    left: 8px;
+    /* Reset dot position */
+    right: auto;
+  }
 }
 
 /* Contact */
@@ -1087,6 +1174,18 @@ footer {
   .hero h1 {
     margin-bottom: 0.5rem;
     /* Reduced margin */
+  }
+
+  /* Ensure subtitle stays on one line */
+  .hero-subtitle {
+    font-size: 1.2rem !important;
+    /* Force smaller size on mobile */
+    min-height: 40px;
+    line-height: 1.2;
+    white-space: nowrap;
+    /* Prevent wrapping */
+    overflow: visible;
+    /* Ensure content is visible */
   }
 }
 

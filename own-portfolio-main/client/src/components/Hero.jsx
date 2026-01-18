@@ -39,7 +39,7 @@ const Hero = () => {
                     <span className="hero-greeting">Hi, I'm</span> <br />
                     <span className="text-gradient">Kritika Rathore</span>
                 </h1>
-                <h2 style={{ fontSize: 'clamp(1.5rem, 5vw, 2rem)', minHeight: '60px', lineHeight: '1.2' }}>
+                <h2 className="hero-subtitle">
                     Aspiring <span style={{ color: 'var(--accent)' }}>{text}</span><span className="cursor">|</span>
                 </h2>
                 <p>
