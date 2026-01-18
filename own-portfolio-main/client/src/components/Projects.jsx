@@ -29,8 +29,8 @@ const Projects = () => {
         target.style.setProperty("--mouse-y", `${y}px`);
     };
 
-    // Duplicate projects for seamless infinite scroll loop (4x to fill wide screens)
-    const displayProjects = [...projects, ...projects, ...projects, ...projects];
+    // Use projects directly to avoid infinite duplication issue
+    const displayProjects = projects;
 
     return (
         <section id="projects" className="container">

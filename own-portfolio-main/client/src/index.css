@@ -470,28 +470,35 @@ header .container {
 
 @media (max-width: 480px) {
   .project-scroller {
-    overflow: visible;
-    /* Allow vertical flow */
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
     mask-image: none;
-    /* Remove mask */
+    display: flex;
   }
 
   .project-track {
     display: flex;
-    flex-direction: column;
-    /* Vertical Stack */
-    width: 100%;
+    /* Horizontal */
+    width: max-content;
+    /* Allow track to grow horizontally */
     animation: none;
-    gap: 30px;
-    /* Space between stacked cards */
-    padding: 10px;
+    /* Disable marquee */
+    gap: 0;
+    padding: 0;
   }
 
   .project-track .card {
-    min-width: 100%;
-    max-width: 100%;
-    /* Full width */
+    min-width: 100vw;
+    /* Full viewport width for single card view */
+    max-width: 100vw;
+    scroll-snap-align: center;
     margin: 0;
+    border-radius: 0;
+    /* Optional: squared edges for full width */
+    padding: 30px;
+    /* Internal padding */
+    box-sizing: border-box;
   }
 }
 
